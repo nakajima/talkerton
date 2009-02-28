@@ -35,6 +35,6 @@ Signal.trap('INT') do
   exemplar.ping!
 end
 
-t = Talkerton.new
+t = Talkerton.new('Hello World!', :voice => 'Vicki')
 t.words { |val| "new value: #{val.inspect}. The count is now #{exemplar.count}" }
 t.notify(:change) { $PINGED }
