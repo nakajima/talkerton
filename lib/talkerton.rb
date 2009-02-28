@@ -6,10 +6,10 @@ class Talkerton
   def initialize(*words)
     @words = words
     @options = @words.last.is_a?(Hash) ? @words.pop : {}
-    opt(:voice, '-v', '--voice')
-    opt(:delay, '-d', '--delay')
-    opt(:script, '-s', '--script')
-    opt(:help, '-h', '--help') do
+    opt(:voice, '-v')
+    opt(:delay, '-d')
+    opt(:script, '-s')
+    opt(:help, '-h') do
       puts "Usage: talker [words]"
       puts "Voices: #{voices.join(', ')}"
       exit 0
@@ -61,7 +61,7 @@ class Talkerton
   private
 
   def opt(name, *matchers)
-    idx = matchers.inject(nil) { |res, m| res ||= @words.index(m) }
+    idx = (matchers << "--#{name}").inject(nil) { |res, m| res ||= @words.index(m) }
     return unless idx
     if block_given?
       yield
