@@ -22,13 +22,13 @@ class Talkerton
 
   def notify(on, &block)
     loop do
-      on.is_a?(Symbol) ? change(&block) : remain(&block)
+      on.is_a?(Symbol) ? change(&block) : remain(on, &block)
       sleep (@options[:delay] || 1)
     end
   end
 
-  def remain(&block)
-    value = block.call
+  def remain(on, &block)
+    value = block.call == on[:when]
     speak!(value) if value
   end
 
